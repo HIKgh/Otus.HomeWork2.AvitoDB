@@ -1,0 +1,35 @@
+INSERT INTO public.product_type (id, "name") VALUES(1, 'Одежда');
+INSERT INTO public.product_type (id, "name") VALUES(2, 'Музыкальные инструменты');
+INSERT INTO public.product_type (id, "name") VALUES(3, 'Мебель');
+INSERT INTO public.product_type (id, "name") VALUES(4, 'Обувь');
+INSERT INTO public.product_type (id, "name") VALUES(5, 'Электротовары');
+
+INSERT INTO public.product (id, "name", id_product_type) VALUES(1, 'Пианино', 2);
+INSERT INTO public.product (id, "name", id_product_type) VALUES(2, 'Гитара классическая', 2);
+INSERT INTO public.product (id, "name", id_product_type) VALUES(3, 'Пуховик', 1);
+INSERT INTO public.product (id, "name", id_product_type) VALUES(4, 'Джинсы', 1);
+INSERT INTO public.product (id, "name", id_product_type) VALUES(6, 'Стол', 3);
+INSERT INTO public.product (id, "name", id_product_type) VALUES(5, 'Блузка', 1);
+INSERT INTO public.product (id, "name", id_product_type) VALUES(7, 'Стул', 3);
+INSERT INTO public.product (id, "name", id_product_type) VALUES(9, 'Бутсы', 4);
+INSERT INTO public.product (id, "name", id_product_type) VALUES(8, 'Шкаф', 3);
+INSERT INTO public.product (id, "name", id_product_type) VALUES(10, 'Туфли', 4);
+INSERT INTO public.product (id, "name", id_product_type) VALUES(12, 'Телефон сотовый', 5);
+INSERT INTO public.product (id, "name", id_product_type) VALUES(11, 'Кроссовки', 4);
+INSERT INTO public.product (id, "name", id_product_type) VALUES(13, 'Печь мироволновая', 5);
+
+INSERT INTO public.seller (id, "name", phone, address) VALUES(1, 'Евгений', '79120000001', 'г. Калуга, ул. Ленина, 1');
+INSERT INTO public.seller (id, "name", phone, address) VALUES(2, 'Полина', '79120000002', 'г. Калуга, ул. Гоголя, 1');
+INSERT INTO public.seller (id, "name", phone, address) VALUES(3, 'Егор', '79120000003', 'г. Калуга, ул. Пушкина, 1');
+INSERT INTO public.seller (id, "name", phone, address) VALUES(4, 'Анна', '79120000004', 'г. Калуга, ул. Достоевского, 1');
+INSERT INTO public.seller (id, "name", phone, address) VALUES(5, 'Елена', '79120000005', 'г. Калуга, ул. Гончарова, 1');
+
+INSERT INTO public.annoucement (id, id_seller, id_product, description, publish_datetime, price, headline, is_close) VALUES(5, 1, 9, '43 размер', '2023-02-23 14:55:35.663', 2999.99, 'Бутсы б/у Adidas', false);
+INSERT INTO public.annoucement (id, id_seller, id_product, description, publish_datetime, price, headline, is_close) VALUES(8, 2, 3, 'Красный', '2023-02-23 14:59:33.539', 1000, 'Пуховик б/у Finnflare', false);
+INSERT INTO public.annoucement (id, id_seller, id_product, description, publish_datetime, price, headline, is_close) VALUES(10, 1, 5, 'Белая', '2023-02-23 15:02:05.868', 1500, 'Блузка б/у б/н', true);
+INSERT INTO public.annoucement (id, id_seller, id_product, description, publish_datetime, price, headline, is_close) VALUES(11, 2, 12, 'В рабочем состоянии', '2023-02-23 15:09:15.688', 7000, 'Телефон Samsung Galaxy A52', false);
+INSERT INTO public.annoucement (id, id_seller, id_product, description, publish_datetime, price, headline, is_close) VALUES(12, 2, 13, 'Не нагревает', '2023-02-23 15:10:06.673', 999, 'МВЧ LG 1020-w', false);
+INSERT INTO public.annoucement (id, id_seller, id_product, description, publish_datetime, price, headline, is_close) VALUES(6, 4, 1, 'Отличное пианино', '2023-02-23 14:57:15.167', 5000, 'Пианино б/у Элегия', false);
+INSERT INTO public.annoucement (id, id_seller, id_product, description, publish_datetime, price, headline, is_close) VALUES(7, 3, 2, 'Супер гирата', '2023-02-23 14:58:28.405', 2500, 'Гитара б/у Yamaha', false);
+INSERT INTO public.annoucement (id, id_seller, id_product, description, publish_datetime, price, headline, is_close) VALUES(9, 5, 4, 'Раритетна вещь из 90-х', '2023-02-23 15:00:56.329', 500, 'Джинсы б/у Mawin', false);
+

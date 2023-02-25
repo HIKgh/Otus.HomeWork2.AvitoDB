@@ -1,0 +1,175 @@
+-- DROP SCHEMA public;
+
+CREATE SCHEMA public AUTHORIZATION pg_database_owner;
+
+COMMENT ON SCHEMA public IS 'standard public schema';
+
+-- DROP SEQUENCE public.annoucement_id_seq;
+
+CREATE SEQUENCE public.annoucement_id_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	START 1
+	CACHE 1
+	NO CYCLE;
+-- DROP SEQUENCE public.annoucement_id_seq1;
+
+CREATE SEQUENCE public.annoucement_id_seq1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	START 1
+	CACHE 1
+	NO CYCLE;
+-- DROP SEQUENCE public.product_id_seq;
+
+CREATE SEQUENCE public.product_id_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	START 1
+	CACHE 1
+	NO CYCLE;
+-- DROP SEQUENCE public.product_id_seq1;
+
+CREATE SEQUENCE public.product_id_seq1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	START 1
+	CACHE 1
+	NO CYCLE;
+-- DROP SEQUENCE public.product_type_id_seq;
+
+CREATE SEQUENCE public.product_type_id_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	START 1
+	CACHE 1
+	NO CYCLE;
+-- DROP SEQUENCE public.product_type_id_seq1;
+
+CREATE SEQUENCE public.product_type_id_seq1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	START 1
+	CACHE 1
+	NO CYCLE;
+-- DROP SEQUENCE public.seller_id_seq;
+
+CREATE SEQUENCE public.seller_id_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	START 1
+	CACHE 1
+	NO CYCLE;
+-- DROP SEQUENCE public.seller_id_seq1;
+
+CREATE SEQUENCE public.seller_id_seq1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	START 1
+	CACHE 1
+	NO CYCLE;-- public.product_type definition
+
+-- Drop table
+
+-- DROP TABLE public.product_type;
+
+CREATE TABLE public.product_type (
+	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY, -- Идентификатор
+	"name" varchar NOT NULL, -- Наименование
+	CONSTRAINT product_type_pk PRIMARY KEY (id)
+);
+CREATE INDEX product_type_name_idx ON public.product_type USING btree (name);
+COMMENT ON TABLE public.product_type IS 'Тип товара';
+
+-- Column comments
+
+COMMENT ON COLUMN public.product_type.id IS 'Идентификатор';
+COMMENT ON COLUMN public.product_type."name" IS 'Наименование';
+
+
+-- public.seller definition
+
+-- Drop table
+
+-- DROP TABLE public.seller;
+
+CREATE TABLE public.seller (
+	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY, -- Идентификатор
+	"name" varchar NOT NULL, -- Наименование
+	phone varchar NOT NULL, -- Телефон
+	address varchar NOT NULL, -- Адрес
+	CONSTRAINT seller_pk PRIMARY KEY (id)
+);
+CREATE INDEX seller_name_idx ON public.seller USING btree (name);
+COMMENT ON TABLE public.seller IS 'Продавец';
+
+-- Column comments
+
+COMMENT ON COLUMN public.seller.id IS 'Идентификатор';
+COMMENT ON COLUMN public.seller."name" IS 'Наименование';
+COMMENT ON COLUMN public.seller.phone IS 'Телефон';
+COMMENT ON COLUMN public.seller.address IS 'Адрес';
+
+
+-- public.product definition
+
+-- Drop table
+
+-- DROP TABLE public.product;
+
+CREATE TABLE public.product (
+	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY, -- Идентификатор
+	"name" varchar NOT NULL, -- Наименование
+	id_product_type int4 NOT NULL, -- Идентификатор типа товара
+	CONSTRAINT product_pk PRIMARY KEY (id),
+	CONSTRAINT product_product_type_fk FOREIGN KEY (id_product_type) REFERENCES public.product_type(id)
+);
+CREATE INDEX product_name_idx ON public.product USING btree (name);
+COMMENT ON TABLE public.product IS 'Товар';
+
+-- Column comments
+
+COMMENT ON COLUMN public.product.id IS 'Идентификатор';
+COMMENT ON COLUMN public.product."name" IS 'Наименование';
+COMMENT ON COLUMN public.product.id_product_type IS 'Идентификатор типа товара';
+
+
+-- public.annoucement definition
+
+-- Drop table
+
+-- DROP TABLE public.annoucement;
+
+CREATE TABLE public.annoucement (
+	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY, -- Идентификатор
+	id_seller int4 NOT NULL, -- Идентификатор продавца
+	id_product int4 NOT NULL, -- Идентификатор товара
+	description varchar NOT NULL, -- Описание
+	publish_datetime timestamp NOT NULL DEFAULT now(), -- Дата и время
+	price numeric NOT NULL, -- Цена
+	headline varchar NOT NULL, -- Заголовок
+	is_close bool NOT NULL DEFAULT false, -- Закрыто
+	CONSTRAINT annoucement_pk PRIMARY KEY (id),
+	CONSTRAINT annoucement_product_fk FOREIGN KEY (id_product) REFERENCES public.product(id),
+	CONSTRAINT annoucement_seller_fk FOREIGN KEY (id_seller) REFERENCES public.seller(id)
+);
+COMMENT ON TABLE public.annoucement IS 'Объявление';
+
+-- Column comments
+
+COMMENT ON COLUMN public.annoucement.id IS 'Идентификатор';
+COMMENT ON COLUMN public.annoucement.id_seller IS 'Идентификатор продавца';
+COMMENT ON COLUMN public.annoucement.id_product IS 'Идентификатор товара';
+COMMENT ON COLUMN public.annoucement.description IS 'Описание';
+COMMENT ON COLUMN public.annoucement.publish_datetime IS 'Дата и время';
+COMMENT ON COLUMN public.annoucement.price IS 'Цена';
+COMMENT ON COLUMN public.annoucement.headline IS 'Заголовок';
+COMMENT ON COLUMN public.annoucement.is_close IS 'Закрыто';
