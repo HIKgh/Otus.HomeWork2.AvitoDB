@@ -130,7 +130,7 @@ CREATE TABLE public.product (
 	"name" varchar NOT NULL, -- Наименование
 	id_product_type int4 NOT NULL, -- Идентификатор типа товара
 	CONSTRAINT product_pk PRIMARY KEY (id),
-	CONSTRAINT product_product_type_fk FOREIGN KEY (id_product_type) REFERENCES public.product_type(id)
+	CONSTRAINT product_product_type_fk FOREIGN KEY (id_product_type) REFERENCES public.product_type(id) ON DELETE RESTRICT
 );
 CREATE INDEX product_name_idx ON public.product USING btree (name);
 COMMENT ON TABLE public.product IS 'Товар';
@@ -158,8 +158,8 @@ CREATE TABLE public.annoucement (
 	headline varchar NOT NULL, -- Заголовок
 	is_close bool NOT NULL DEFAULT false, -- Закрыто
 	CONSTRAINT annoucement_pk PRIMARY KEY (id),
-	CONSTRAINT annoucement_product_fk FOREIGN KEY (id_product) REFERENCES public.product(id),
-	CONSTRAINT annoucement_seller_fk FOREIGN KEY (id_seller) REFERENCES public.seller(id)
+	CONSTRAINT annoucement_product_fk FOREIGN KEY (id_product) REFERENCES public.product(id) ON DELETE RESTRICT,
+	CONSTRAINT annoucement_seller_fk FOREIGN KEY (id_seller) REFERENCES public.seller(id) ON DELETE RESTRICT
 );
 COMMENT ON TABLE public.annoucement IS 'Объявление';
 

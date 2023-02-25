@@ -28,7 +28,6 @@ public abstract class Repository<T, TPrimaryKey> : ReadRepository<T, TPrimaryKey
         {
             return false;
         }
-
         EntitySet.Remove(obj);
         return true;
     }

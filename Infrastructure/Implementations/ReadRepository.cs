@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Implementations;
 
-
 /// <summary>
 /// Репозиторий для чтения
 /// </summary>
