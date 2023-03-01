@@ -1,175 +1,116 @@
 -- DROP SCHEMA public;
 
-CREATE SCHEMA public AUTHORIZATION pg_database_owner;
+CREATE SCHEMA IF NOT EXISTS public AUTHORIZATION pg_database_owner;
 
 COMMENT ON SCHEMA public IS 'standard public schema';
 
--- DROP SEQUENCE public.annoucement_id_seq;
+DROP SEQUENCE IF EXISTS public.annoucement_id_seq;
 
-CREATE SEQUENCE public.annoucement_id_seq
-	INCREMENT BY 1
-	MINVALUE 1
-	MAXVALUE 2147483647
-	START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.annoucement_id_seq1;
+DROP SEQUENCE IF EXISTS public.product_id_seq;
 
-CREATE SEQUENCE public.annoucement_id_seq1
-	INCREMENT BY 1
-	MINVALUE 1
-	MAXVALUE 2147483647
-	START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.product_id_seq;
+DROP SEQUENCE IF EXISTS public.product_type_id_seq;
 
-CREATE SEQUENCE public.product_id_seq
-	INCREMENT BY 1
-	MINVALUE 1
-	MAXVALUE 2147483647
-	START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.product_id_seq1;
+DROP SEQUENCE IF EXISTS public.seller_id_seq;
 
-CREATE SEQUENCE public.product_id_seq1
-	INCREMENT BY 1
-	MINVALUE 1
-	MAXVALUE 2147483647
-	START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.product_type_id_seq;
+-- public.product_type definition
 
-CREATE SEQUENCE public.product_type_id_seq
-	INCREMENT BY 1
-	MINVALUE 1
-	MAXVALUE 2147483647
-	START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.product_type_id_seq1;
-
-CREATE SEQUENCE public.product_type_id_seq1
-	INCREMENT BY 1
-	MINVALUE 1
-	MAXVALUE 2147483647
-	START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.seller_id_seq;
-
-CREATE SEQUENCE public.seller_id_seq
-	INCREMENT BY 1
-	MINVALUE 1
-	MAXVALUE 2147483647
-	START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.seller_id_seq1;
-
-CREATE SEQUENCE public.seller_id_seq1
-	INCREMENT BY 1
-	MINVALUE 1
-	MAXVALUE 2147483647
-	START 1
-	CACHE 1
-	NO CYCLE;-- public.product_type definition
-
--- Drop table
-
--- DROP TABLE public.product_type;
+DROP TABLE IF EXISTS public.product_type;
 
 CREATE TABLE public.product_type (
-	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY, -- Идентификатор
-	"name" varchar NOT NULL, -- Наименование
+	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY, -- РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ
+	"name" varchar NOT NULL, -- РќР°РёРјРµРЅРѕРІР°РЅРёРµ
 	CONSTRAINT product_type_pk PRIMARY KEY (id)
 );
 CREATE INDEX product_type_name_idx ON public.product_type USING btree (name);
-COMMENT ON TABLE public.product_type IS 'Тип товара';
+COMMENT ON TABLE public.product_type IS 'РўРёРї С‚РѕРІР°СЂР°';
 
 -- Column comments
 
-COMMENT ON COLUMN public.product_type.id IS 'Идентификатор';
-COMMENT ON COLUMN public.product_type."name" IS 'Наименование';
+COMMENT ON COLUMN public.product_type.id IS 'РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ';
+COMMENT ON COLUMN public.product_type."name" IS 'РќР°РёРјРµРЅРѕРІР°РЅРёРµ';
 
 
 -- public.seller definition
 
--- Drop table
-
--- DROP TABLE public.seller;
+DROP TABLE IF EXISTS public.seller;
 
 CREATE TABLE public.seller (
-	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY, -- Идентификатор
-	"name" varchar NOT NULL, -- Наименование
-	phone varchar NOT NULL, -- Телефон
-	address varchar NOT NULL, -- Адрес
+	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY, -- РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ
+	"name" varchar NOT NULL, -- РќР°РёРјРµРЅРѕРІР°РЅРёРµ
+	phone varchar NOT NULL, -- РўРµР»РµС„РѕРЅ
+	address varchar NOT NULL, -- РђРґСЂРµСЃ
 	CONSTRAINT seller_pk PRIMARY KEY (id)
 );
 CREATE INDEX seller_name_idx ON public.seller USING btree (name);
-COMMENT ON TABLE public.seller IS 'Продавец';
+COMMENT ON TABLE public.seller IS 'РџСЂРѕРґР°РІРµС†';
 
 -- Column comments
 
-COMMENT ON COLUMN public.seller.id IS 'Идентификатор';
-COMMENT ON COLUMN public.seller."name" IS 'Наименование';
-COMMENT ON COLUMN public.seller.phone IS 'Телефон';
-COMMENT ON COLUMN public.seller.address IS 'Адрес';
+COMMENT ON COLUMN public.seller.id IS 'РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ';
+COMMENT ON COLUMN public.seller."name" IS 'РќР°РёРјРµРЅРѕРІР°РЅРёРµ';
+COMMENT ON COLUMN public.seller.phone IS 'РўРµР»РµС„РѕРЅ';
+COMMENT ON COLUMN public.seller.address IS 'РђРґСЂРµСЃ';
 
 
 -- public.product definition
 
--- Drop table
-
--- DROP TABLE public.product;
+DROP TABLE IF EXISTS public.product;
 
 CREATE TABLE public.product (
-	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY, -- Идентификатор
-	"name" varchar NOT NULL, -- Наименование
-	id_product_type int4 NOT NULL, -- Идентификатор типа товара
+	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY, -- РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ
+	"name" varchar NOT NULL, -- РќР°РёРјРµРЅРѕРІР°РЅРёРµ
+	id_product_type int4 NOT NULL, -- РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ С‚РёРїР° С‚РѕРІР°СЂР°
 	CONSTRAINT product_pk PRIMARY KEY (id),
 	CONSTRAINT product_product_type_fk FOREIGN KEY (id_product_type) REFERENCES public.product_type(id) ON DELETE RESTRICT
 );
 CREATE INDEX product_name_idx ON public.product USING btree (name);
-COMMENT ON TABLE public.product IS 'Товар';
+COMMENT ON TABLE public.product IS 'РўРѕРІР°СЂ';
 
 -- Column comments
 
-COMMENT ON COLUMN public.product.id IS 'Идентификатор';
-COMMENT ON COLUMN public.product."name" IS 'Наименование';
-COMMENT ON COLUMN public.product.id_product_type IS 'Идентификатор типа товара';
+COMMENT ON COLUMN public.product.id IS 'РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ';
+COMMENT ON COLUMN public.product."name" IS 'РќР°РёРјРµРЅРѕРІР°РЅРёРµ';
+COMMENT ON COLUMN public.product.id_product_type IS 'РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ С‚РёРїР° С‚РѕРІР°СЂР°';
 
 
 -- public.annoucement definition
 
--- Drop table
-
--- DROP TABLE public.annoucement;
+DROP TABLE IF EXISTS public.annoucement;
 
 CREATE TABLE public.annoucement (
-	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY, -- Идентификатор
-	id_seller int4 NOT NULL, -- Идентификатор продавца
-	id_product int4 NOT NULL, -- Идентификатор товара
-	description varchar NOT NULL, -- Описание
-	publish_datetime timestamp NOT NULL DEFAULT now(), -- Дата и время
-	price numeric NOT NULL, -- Цена
-	headline varchar NOT NULL, -- Заголовок
-	is_close bool NOT NULL DEFAULT false, -- Закрыто
+	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY, -- РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ
+	id_seller int4 NOT NULL, -- РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїСЂРѕРґР°РІС†Р°
+	id_product int4 NOT NULL, -- РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ С‚РѕРІР°СЂР°
+	description varchar NOT NULL, -- РћРїРёСЃР°РЅРёРµ
+	publish_datetime timestamp NOT NULL DEFAULT now(), -- Р”Р°С‚Р° Рё РІСЂРµРјСЏ
+	price numeric NOT NULL, -- Р¦РµРЅР°
+	headline varchar NOT NULL, -- Р—Р°РіРѕР»РѕРІРѕРє
+	is_close bool NOT NULL DEFAULT false, -- Р—Р°РєСЂС‹С‚Рѕ
 	CONSTRAINT annoucement_pk PRIMARY KEY (id),
 	CONSTRAINT annoucement_product_fk FOREIGN KEY (id_product) REFERENCES public.product(id) ON DELETE RESTRICT,
 	CONSTRAINT annoucement_seller_fk FOREIGN KEY (id_seller) REFERENCES public.seller(id) ON DELETE RESTRICT
 );
-COMMENT ON TABLE public.annoucement IS 'Объявление';
+COMMENT ON TABLE public.annoucement IS 'РћР±СЉСЏРІР»РµРЅРёРµ';
 
 -- Column comments
 
-COMMENT ON COLUMN public.annoucement.id IS 'Идентификатор';
-COMMENT ON COLUMN public.annoucement.id_seller IS 'Идентификатор продавца';
-COMMENT ON COLUMN public.annoucement.id_product IS 'Идентификатор товара';
-COMMENT ON COLUMN public.annoucement.description IS 'Описание';
-COMMENT ON COLUMN public.annoucement.publish_datetime IS 'Дата и время';
-COMMENT ON COLUMN public.annoucement.price IS 'Цена';
-COMMENT ON COLUMN public.annoucement.headline IS 'Заголовок';
-COMMENT ON COLUMN public.annoucement.is_close IS 'Закрыто';
+COMMENT ON COLUMN public.annoucement.id IS 'РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ';
+COMMENT ON COLUMN public.annoucement.id_seller IS 'РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїСЂРѕРґР°РІС†Р°';
+COMMENT ON COLUMN public.annoucement.id_product IS 'РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ С‚РѕРІР°СЂР°';
+COMMENT ON COLUMN public.annoucement.description IS 'РћРїРёСЃР°РЅРёРµ';
+COMMENT ON COLUMN public.annoucement.publish_datetime IS 'Р”Р°С‚Р° Рё РІСЂРµРјСЏ';
+COMMENT ON COLUMN public.annoucement.price IS 'Р¦РµРЅР°';
+COMMENT ON COLUMN public.annoucement.headline IS 'Р—Р°РіРѕР»РѕРІРѕРє';
+COMMENT ON COLUMN public.annoucement.is_close IS 'Р—Р°РєСЂС‹С‚Рѕ';
+
+ALTER SEQUENCE IF EXISTS public.annoucement_id_seq
+RESTART 16;
+
+ALTER SEQUENCE IF EXISTS public.product_id_seq
+RESTART 14;
+
+ALTER SEQUENCE IF EXISTS public.product_type_id_seq
+RESTART 6;
+
+ALTER SEQUENCE IF EXISTS public.seller_id_seq
+RESTART 6;
